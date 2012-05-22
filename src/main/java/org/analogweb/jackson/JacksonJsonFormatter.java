@@ -9,16 +9,15 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig.Feature;
 
 /**
+ * <a href="http://jackson.codehaus.org/">Jackson</a>を使用して
+ * レスポンスする対象のオブジェクトをJSONにフォーマットする
+ * {@link DirectionFormatter}の実装です。<br/>
  * @author snowgoose
  */
 public class JacksonJsonFormatter implements DirectionFormatter {
     
-    private ObjectMapper mapper;
+    private ObjectMapper mapper = initObjectMapper();
 
-    public JacksonJsonFormatter(){
-        this.mapper = initObjectMapper();
-    }
-    
     protected ObjectMapper initObjectMapper(){
         ObjectMapper newMapper = new ObjectMapper();
         newMapper.configure(Feature.FAIL_ON_EMPTY_BEANS, false);

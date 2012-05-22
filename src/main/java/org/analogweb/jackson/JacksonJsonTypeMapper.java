@@ -15,15 +15,16 @@ import org.analogweb.util.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
+ * Jacksonによる変換により、リクエストされたJSONを任意のオブジェクト
+ * のインスタンスに変換する{@link TypeMapper}の実装です。<br/>
+ * 変換元の値として、リクエストされたJSONを保持する{@link InputStream}
+ * または{@link Reader}(読み込み可能なリクエストボディ)が指定されている
+ * 必要があります。
  * @author snowgoose
  */
 public class JacksonJsonTypeMapper implements TypeMapper {
 
-    private ObjectMapper mapper;
-
-    public JacksonJsonTypeMapper() {
-        this.mapper = initObjectMapper();
-    }
+    private ObjectMapper mapper = initObjectMapper();
 
     protected ObjectMapper initObjectMapper() {
         ObjectMapper newMapper = new ObjectMapper();
