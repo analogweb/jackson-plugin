@@ -2,8 +2,9 @@ package org.analogweb.jackson;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -45,6 +46,18 @@ public class JacksonJsonTypeMapperTest {
     @Test
     public void testMapToType() throws Exception {
         when(request.getContentType()).thenReturn("application/json");
+        InputStream from = new ByteArrayInputStream(
+                "{\"name\":\"snowgoose\",\"alive\":true,\"date\":261846000000}".getBytes());
+        Bean actual = (Bean) mapper.mapToType(requestContext, attributes, from, Bean.class, null);
+        Date expectedDate = new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20");
+        assertThat(actual.getName(), is("snowgoose"));
+        assertThat(actual.isAlive(), is(true));
+        assertThat(actual.getDate(), is(expectedDate));
+    }
+
+    @Test
+    public void testMapToTypeWithCharset() throws Exception {
+        when(request.getContentType()).thenReturn("application/json ;charset=utf-8");
         InputStream from = new ByteArrayInputStream(
                 "{\"name\":\"snowgoose\",\"alive\":true,\"date\":261846000000}".getBytes());
         Bean actual = (Bean) mapper.mapToType(requestContext, attributes, from, Bean.class, null);

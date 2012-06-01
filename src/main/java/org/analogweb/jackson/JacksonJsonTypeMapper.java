@@ -1,6 +1,6 @@
 package org.analogweb.jackson;
 
-import static org.codehaus.jackson.map.DeserializationConfig.Feature.*;
+import static org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,7 +64,7 @@ public class JacksonJsonTypeMapper implements TypeMapper {
     protected boolean isJsonType(RequestContext context) {
         HttpServletRequest request = context.getRequest();
         String contentType = request.getContentType();
-        return StringUtils.isNotEmpty(contentType) && (contentType.equals("application/json"));
+        return StringUtils.isNotEmpty(contentType) && (contentType.startsWith("application/json"));
     }
 
     protected ObjectMapper getObjectMapper() {
