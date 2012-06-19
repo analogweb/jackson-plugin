@@ -16,7 +16,7 @@ import org.codehaus.jackson.map.SerializationConfig.Feature;
  */
 public class JacksonJsonFormatter implements DirectionFormatter {
     
-    private ObjectMapper mapper = initObjectMapper();
+    private ObjectMapper mapper;
 
     protected ObjectMapper initObjectMapper(){
         ObjectMapper newMapper = new ObjectMapper();
@@ -34,7 +34,10 @@ public class JacksonJsonFormatter implements DirectionFormatter {
         }
     }
     
-    protected ObjectMapper getObjectMapper(){
+    protected ObjectMapper getObjectMapper() {
+        if (this.mapper == null) {
+            this.mapper = initObjectMapper();
+        }
         return this.mapper;
     }
 

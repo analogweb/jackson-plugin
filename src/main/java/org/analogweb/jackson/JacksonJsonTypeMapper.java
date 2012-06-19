@@ -24,7 +24,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  */
 public class JacksonJsonTypeMapper implements TypeMapper {
 
-    private ObjectMapper mapper = initObjectMapper();
+    private ObjectMapper mapper;
 
     protected ObjectMapper initObjectMapper() {
         ObjectMapper newMapper = new ObjectMapper();
@@ -68,7 +68,13 @@ public class JacksonJsonTypeMapper implements TypeMapper {
     }
 
     protected ObjectMapper getObjectMapper() {
+        if (this.mapper == null) {
+            this.mapper = initObjectMapper();
+        }
         return this.mapper;
     }
 
+    public synchronized void setObjectMapper(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
 }
