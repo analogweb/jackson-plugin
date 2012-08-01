@@ -1,13 +1,15 @@
 package org.analogweb.jackson;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -48,10 +50,13 @@ public class JacksonJsonFormatterTest {
                 out.write(arg0);
             }
         });
-        Bean source = new Bean("snowgoose",true,new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20"));
+        Date expectedDate = new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20");
+        Bean source = new Bean("snowgoose",true,expectedDate);
         formatter.formatAndWriteInto(context, "UTF-8", source);
         String actual = new String(out.toByteArray(),"UTF-8");
-        assertThat(actual,is("{\"name\":\"snowgoose\",\"alive\":true,\"date\":261846000000}"));
+        assertThat(actual,
+                is("{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime()
+                        + "}"));
     }
 
     @Test
