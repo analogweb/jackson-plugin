@@ -15,10 +15,10 @@ import org.codehaus.jackson.map.SerializationConfig.Feature;
  * @author snowgoose
  */
 public class JacksonJsonFormatter implements DirectionFormatter {
-    
+
     private ObjectMapper mapper;
 
-    protected ObjectMapper initObjectMapper(){
+    protected ObjectMapper initObjectMapper() {
         ObjectMapper newMapper = new ObjectMapper();
         newMapper.configure(Feature.FAIL_ON_EMPTY_BEANS, false);
         return newMapper;
@@ -28,12 +28,12 @@ public class JacksonJsonFormatter implements DirectionFormatter {
     public void formatAndWriteInto(RequestContext writeTo, String charset, Object source) {
         ObjectMapper mapper = getObjectMapper();
         try {
-            mapper.writeValue(writeTo.getResponse().getOutputStream(), source);
+            mapper.writeValue(writeTo.getResponseBody(), source);
         } catch (IOException e) {
             throw new FormatFailureException(e, source, getClass().getName());
         }
     }
-    
+
     protected ObjectMapper getObjectMapper() {
         if (this.mapper == null) {
             this.mapper = initObjectMapper();
