@@ -1,10 +1,10 @@
 package org.analogweb.jackson;
 
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.analogweb.ModulesBuilder;
 import org.analogweb.core.direction.Json;
@@ -31,6 +31,7 @@ public class JacksonPluginModulesConfigTest {
 
         assertThat(actual, is(builder));
         verify(builder).addDirectionFormatterClass(Json.class, JacksonJsonFormatter.class);
+        verify(builder).addAttributesHandlerClass(JacksonJsonTypeMapper.class);
     }
 
 }

@@ -7,10 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -47,7 +45,8 @@ public class JacksonJsonTypeMapperTest {
         InputStream from = new ByteArrayInputStream(String.valueOf(
                 "{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime() + "}")
                 .getBytes());
-        Bean actual = (Bean) mapper.mapToType(requestContext, from, Bean.class, null);
+        when(requestContext.getRequestBody()).thenReturn(from);
+        Bean actual = (Bean) mapper.resolveAttributeValue(requestContext, null, null, Bean.class);
         assertThat(actual.getName(), is("snowgoose"));
         assertThat(actual.isAlive(), is(true));
         assertThat(actual.getDate(), is(expectedDate));
@@ -61,37 +60,18 @@ public class JacksonJsonTypeMapperTest {
         InputStream from = new ByteArrayInputStream(String.valueOf(
                 "{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime() + "}")
                 .getBytes());
-        Bean actual = (Bean) mapper.mapToType(requestContext, from, Bean.class, null);
+        when(requestContext.getRequestBody()).thenReturn(from);
+        Bean actual = (Bean) mapper.resolveAttributeValue(requestContext, null, null, Bean.class);
         assertThat(actual.getName(), is("snowgoose"));
         assertThat(actual.isAlive(), is(true));
         assertThat(actual.getDate(), is(expectedDate));
     }
 
     @Test
-    public void testMapToTypeWithReader() throws Exception {
-        when(headers.getValues("Content-Type")).thenReturn(Arrays.asList("application/json"));
-        Date expectedDate = new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20");
-        Reader from = new StringReader(
-                String.valueOf("{\"name\":\"snowgoose2\",\"alive\":false,\"date\":"
-                        + expectedDate.getTime() + "}"));
-        Bean actual = (Bean) mapper.mapToType(requestContext, from, Bean.class, null);
-        assertThat(actual.getName(), is("snowgoose2"));
-        assertThat(actual.isAlive(), is(false));
-        assertThat(actual.getDate(), is(expectedDate));
-    }
-
-    @Test
-    public void testMapToTypeWithInvalidSource() throws Exception {
-        when(headers.getValues("Content-Type")).thenReturn(Arrays.asList("application/json"));
-        Bean actual = (Bean) mapper.mapToType(requestContext, mock(Serializable.class), Bean.class,
-                null);
-        assertThat(actual, is(nullValue()));
-    }
-
-    @Test
     public void testMapToTypeWithNullSource() throws Exception {
         when(headers.getValues("Content-Type")).thenReturn(Arrays.asList("application/json"));
-        Bean actual = (Bean) mapper.mapToType(requestContext, null, Bean.class, null);
+        when(requestContext.getRequestBody()).thenThrow(new IOException());
+        Bean actual = (Bean) mapper.resolveAttributeValue(requestContext, null, null, Bean.class);
         assertThat(actual, is(nullValue()));
     }
 
@@ -100,7 +80,8 @@ public class JacksonJsonTypeMapperTest {
         when(headers.getValues("Content-Type")).thenReturn(Arrays.asList("text/javascript"));
         InputStream from = new ByteArrayInputStream(
                 "{\"name\":\"snowgoose\",\"alive\":true,\"date\":261846000000}".getBytes());
-        Bean actual = (Bean) mapper.mapToType(requestContext, from, Bean.class, null);
+        when(requestContext.getRequestBody()).thenReturn(from);
+        Bean actual = (Bean) mapper.resolveAttributeValue(requestContext, null, null, Bean.class);
         assertThat(actual, is(nullValue()));
     }
 

@@ -8,8 +8,10 @@ import java.io.Reader;
 import java.util.List;
 
 import org.analogweb.Headers;
+import org.analogweb.InvocationMetadata;
 import org.analogweb.RequestContext;
 import org.analogweb.TypeMapper;
+import org.analogweb.core.AbstractAttributesHandler;
 import org.analogweb.util.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -21,7 +23,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  * 必要があります。
  * @author snowgoose
  */
-public class JacksonJsonTypeMapper implements TypeMapper {
+public class JacksonJsonTypeMapper extends AbstractAttributesHandler {
 
     private ObjectMapper mapper;
 
@@ -32,14 +34,26 @@ public class JacksonJsonTypeMapper implements TypeMapper {
     }
 
     @Override
-    public Object mapToType(RequestContext context, Object from, Class<?> requiredType,
-            String[] formats) {
+    public String getScopeName() {
+        return "json";
+    }
+
+    @Override
+    public Object resolveAttributeValue(RequestContext context, InvocationMetadata metadata,
+            String key, Class<?> requiredType) {
         if (isJsonType(context)) {
+            try {
+                return jsonToObject(context.getRequestBody(), requiredType);
+            } catch (IOException e) {
+                return null;
+            }
+            /*
             if (InputStream.class.isInstance(from)) {
                 return jsonToObject((InputStream) from, requiredType);
             } else if (Reader.class.isInstance(from)) {
                 return jsonToObject((Reader) from, requiredType);
             }
+            */
         }
         return null;
     }

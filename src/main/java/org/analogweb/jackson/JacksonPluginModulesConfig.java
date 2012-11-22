@@ -29,6 +29,7 @@ public class JacksonPluginModulesConfig implements PluginModulesConfig {
     public ModulesBuilder prepare(ModulesBuilder builder) {
         log.log(PLUGIN_MESSAGE_RESOURCE, "IJKB000001");
         builder.addDirectionFormatterClass(Json.class, JacksonJsonFormatter.class);
+        builder.addAttributesHandlerClass(JacksonJsonTypeMapper.class);
         return builder;
     }
 
