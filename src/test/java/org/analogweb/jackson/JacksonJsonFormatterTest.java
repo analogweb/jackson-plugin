@@ -11,8 +11,6 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.ServletOutputStream;
-
 import org.analogweb.RequestContext;
 import org.analogweb.exception.FormatFailureException;
 import org.codehaus.jackson.JsonGenerationException;
@@ -40,12 +38,7 @@ public class JacksonJsonFormatterTest {
     @Test
     public void testFormatAndWriteInto() throws Exception {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(context.getResponseBody()).thenReturn(new ServletOutputStream() {
-            @Override
-            public void write(int arg0) throws IOException {
-                out.write(arg0);
-            }
-        });
+        when(context.getResponseBody()).thenReturn(out);
         Date expectedDate = new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20");
         Bean source = new Bean("snowgoose", true, expectedDate);
         formatter.formatAndWriteInto(context, "UTF-8", source);
@@ -59,12 +52,7 @@ public class JacksonJsonFormatterTest {
     public void testFormatAndWriteIntoOccursIOException() throws Exception {
         thrown.expect(FormatFailureException.class);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(context.getResponseBody()).thenReturn(new ServletOutputStream() {
-            @Override
-            public void write(int arg0) throws IOException {
-                out.write(arg0);
-            }
-        });
+        when(context.getResponseBody()).thenReturn(out);
         ObjectMapper alwaysIOError = new ObjectMapper() {
             @Override
             public void writeValue(OutputStream out, Object value) throws IOException,
