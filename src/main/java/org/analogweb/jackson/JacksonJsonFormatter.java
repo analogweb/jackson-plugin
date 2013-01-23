@@ -1,9 +1,12 @@
 package org.analogweb.jackson;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.analogweb.DirectionFormatter;
 import org.analogweb.RequestContext;
+import org.analogweb.ResponseContext;
+import org.analogweb.ResponseContext.ResponseEntity;
 import org.analogweb.exception.FormatFailureException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig.Feature;
@@ -25,13 +28,19 @@ public class JacksonJsonFormatter implements DirectionFormatter {
     }
 
     @Override
-    public void formatAndWriteInto(RequestContext writeTo, String charset, Object source) {
-        ObjectMapper mapper = getObjectMapper();
-        try {
-            mapper.writeValue(writeTo.getResponseBody(), source);
-        } catch (IOException e) {
-            throw new FormatFailureException(e, source, getClass().getName());
-        }
+    public void formatAndWriteInto(RequestContext context, ResponseContext writeTo, String charset,
+            final Object source) {
+        final ObjectMapper mapper = getObjectMapper();
+        writeTo.getResponseWriter().writeEntity(new ResponseEntity() {
+            @Override
+            public void writeInto(OutputStream responseBody) throws IOException {
+                try {
+                    mapper.writeValue(responseBody, source);
+                } catch (IOException e) {
+                    throw new FormatFailureException(e, source, getClass().getName());
+                }
+            }
+        });
     }
 
     protected ObjectMapper getObjectMapper() {

@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.analogweb.RequestContext;
+import org.analogweb.ResponseContext;
+import org.analogweb.ResponseContext.ResponseWriter;
+import org.analogweb.core.DefaultResponseWriter;
 import org.analogweb.exception.FormatFailureException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -25,6 +28,7 @@ public class JacksonJsonFormatterTest {
 
     private JacksonJsonFormatter formatter;
     private RequestContext context;
+    private ResponseContext response;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -33,15 +37,19 @@ public class JacksonJsonFormatterTest {
     public void setUp() throws Exception {
         formatter = new JacksonJsonFormatter();
         context = mock(RequestContext.class);
+        response = mock(ResponseContext.class);
     }
 
     @Test
     public void testFormatAndWriteInto() throws Exception {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(context.getResponseBody()).thenReturn(out);
+        ResponseWriter writer = new DefaultResponseWriter();
+        when(response.getResponseWriter()).thenReturn(writer);
         Date expectedDate = new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20");
         Bean source = new Bean("snowgoose", true, expectedDate);
-        formatter.formatAndWriteInto(context, "UTF-8", source);
+        formatter.formatAndWriteInto(context, response, "UTF-8", source);
+
+        writer.getEntity().writeInto(out);
         String actual = new String(out.toByteArray(), "UTF-8");
         assertThat(actual,
                 is("{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime()
@@ -52,7 +60,8 @@ public class JacksonJsonFormatterTest {
     public void testFormatAndWriteIntoOccursIOException() throws Exception {
         thrown.expect(FormatFailureException.class);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(context.getResponseBody()).thenReturn(out);
+        ResponseWriter writer = new DefaultResponseWriter();
+        when(response.getResponseWriter()).thenReturn(writer);
         ObjectMapper alwaysIOError = new ObjectMapper() {
             @Override
             public void writeValue(OutputStream out, Object value) throws IOException,
@@ -63,7 +72,8 @@ public class JacksonJsonFormatterTest {
         Bean source = new Bean("snowgoose", true,
                 new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20"));
         formatter.setObjectMapper(alwaysIOError);
-        formatter.formatAndWriteInto(context, "UTF-8", source);
+        formatter.formatAndWriteInto(context, response, "UTF-8", source);
+        writer.getEntity().writeInto(out);
     }
 
 }
