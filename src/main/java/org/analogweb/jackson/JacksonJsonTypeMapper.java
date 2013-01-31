@@ -5,14 +5,14 @@ import static org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNK
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.util.List;
 
-import org.analogweb.Headers;
 import org.analogweb.InvocationMetadata;
+import org.analogweb.MediaType;
 import org.analogweb.RequestContext;
 import org.analogweb.TypeMapper;
 import org.analogweb.core.AbstractAttributesHandler;
-import org.analogweb.util.StringUtils;
+import org.analogweb.core.MediaTypes;
+import org.analogweb.core.SpecificMediaTypeAttirbutesHandler;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
@@ -23,7 +23,8 @@ import org.codehaus.jackson.map.ObjectMapper;
  * 必要があります。
  * @author snowgoose
  */
-public class JacksonJsonTypeMapper extends AbstractAttributesHandler {
+public class JacksonJsonTypeMapper extends AbstractAttributesHandler implements
+        SpecificMediaTypeAttirbutesHandler {
 
     private ObjectMapper mapper;
 
@@ -41,21 +42,11 @@ public class JacksonJsonTypeMapper extends AbstractAttributesHandler {
     @Override
     public Object resolveAttributeValue(RequestContext context, InvocationMetadata metadata,
             String key, Class<?> requiredType) {
-        if (isJsonType(context)) {
-            try {
-                return jsonToObject(context.getRequestBody(), requiredType);
-            } catch (IOException e) {
-                return null;
-            }
-            /*
-            if (InputStream.class.isInstance(from)) {
-                return jsonToObject((InputStream) from, requiredType);
-            } else if (Reader.class.isInstance(from)) {
-                return jsonToObject((Reader) from, requiredType);
-            }
-            */
+        try {
+            return jsonToObject(context.getRequestBody(), requiredType);
+        } catch (IOException e) {
+            return null;
         }
-        return null;
     }
 
     protected Object jsonToObject(InputStream in, Class<?> requiredType) {
@@ -74,14 +65,9 @@ public class JacksonJsonTypeMapper extends AbstractAttributesHandler {
         }
     }
 
-    protected boolean isJsonType(RequestContext context) {
-        Headers headers = context.getRequestHeaders();
-        List<String> contentTypes = headers.getValues("Content-Type");
-        if (contentTypes == null || contentTypes.isEmpty()) {
-            return false;
-        }
-        String contentType = contentTypes.get(0);
-        return StringUtils.isNotEmpty(contentType) && (contentType.startsWith("application/json"));
+    @Override
+    public boolean supports(MediaType mediaType) {
+        return MediaTypes.APPLICATION_JSON_TYPE.isCompatible(mediaType);
     }
 
     protected ObjectMapper getObjectMapper() {

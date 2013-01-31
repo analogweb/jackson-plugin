@@ -15,6 +15,7 @@ import java.util.Date;
 
 import org.analogweb.Headers;
 import org.analogweb.RequestContext;
+import org.analogweb.core.MediaTypes;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -76,13 +77,12 @@ public class JacksonJsonTypeMapperTest {
     }
 
     @Test
-    public void testMapToTypeWithInvalidContentType() throws Exception {
-        when(headers.getValues("Content-Type")).thenReturn(Arrays.asList("text/javascript"));
-        InputStream from = new ByteArrayInputStream(
-                "{\"name\":\"snowgoose\",\"alive\":true,\"date\":261846000000}".getBytes());
-        when(requestContext.getRequestBody()).thenReturn(from);
-        Bean actual = (Bean) mapper.resolveAttributeValue(requestContext, null, null, Bean.class);
-        assertThat(actual, is(nullValue()));
+    public void testSupports() throws Exception {
+        assertThat(mapper.supports(MediaTypes.APPLICATION_JSON_TYPE), is(true));
+
+        assertThat(mapper.supports(MediaTypes.TEXT_PLAIN_TYPE), is(false));
+        assertThat(mapper.supports(MediaTypes.valueOf("text/javascript")), is(false));
+        assertThat(mapper.supports(MediaTypes.valueOf("aplication/javascript")), is(false));
     }
 
 }
