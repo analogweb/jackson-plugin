@@ -15,7 +15,7 @@ import org.analogweb.RequestContext;
 import org.analogweb.ResponseContext;
 import org.analogweb.ResponseContext.ResponseWriter;
 import org.analogweb.core.DefaultResponseWriter;
-import org.analogweb.exception.FormatFailureException;
+import org.analogweb.core.FormatFailureException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
