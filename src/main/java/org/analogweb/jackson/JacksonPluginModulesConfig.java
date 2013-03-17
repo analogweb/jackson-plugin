@@ -2,7 +2,7 @@ package org.analogweb.jackson;
 
 import org.analogweb.ModulesBuilder;
 import org.analogweb.PluginModulesConfig;
-import org.analogweb.core.direction.Json;
+import org.analogweb.core.response.Json;
 import org.analogweb.util.MessageResource;
 import org.analogweb.util.PropertyResourceBundleMessageResource;
 import org.analogweb.util.logging.Log;
@@ -28,7 +28,7 @@ public class JacksonPluginModulesConfig implements PluginModulesConfig {
     @Override
     public ModulesBuilder prepare(ModulesBuilder builder) {
         log.log(PLUGIN_MESSAGE_RESOURCE, "IJKB000001");
-        builder.addDirectionFormatterClass(Json.class, JacksonJsonFormatter.class);
+        builder.addResponseFormatterClass(Json.class, JacksonJsonFormatter.class);
         builder.addAttributesHandlerClass(JacksonJsonTypeMapper.class);
         return builder;
     }

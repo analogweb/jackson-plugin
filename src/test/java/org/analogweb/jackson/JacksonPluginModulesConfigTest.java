@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.analogweb.ModulesBuilder;
-import org.analogweb.core.direction.Json;
+import org.analogweb.core.response.Json;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,13 +24,13 @@ public class JacksonPluginModulesConfigTest {
 
     @Test
     public void test() {
-        when(builder.addDirectionFormatterClass(Json.class, JacksonJsonFormatter.class))
+        when(builder.addResponseFormatterClass(Json.class, JacksonJsonFormatter.class))
                 .thenReturn(builder);
 
         ModulesBuilder actual = config.prepare(builder);
 
         assertThat(actual, is(builder));
-        verify(builder).addDirectionFormatterClass(Json.class, JacksonJsonFormatter.class);
+        verify(builder).addResponseFormatterClass(Json.class, JacksonJsonFormatter.class);
         verify(builder).addAttributesHandlerClass(JacksonJsonTypeMapper.class);
     }
 

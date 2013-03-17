@@ -1,10 +1,9 @@
 package org.analogweb.jackson;
 
-
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.analogweb.DirectionFormatter;
+import org.analogweb.ResponseFormatter;
 import org.analogweb.RequestContext;
 import org.analogweb.ResponseContext;
 import org.analogweb.ResponseContext.ResponseEntity;
@@ -18,7 +17,7 @@ import org.codehaus.jackson.map.SerializationConfig.Feature;
  * {@link DirectionFormatter}の実装です。<br/>
  * @author snowgoose
  */
-public class JacksonJsonFormatter implements DirectionFormatter {
+public class JacksonJsonFormatter implements ResponseFormatter {
 
     private ObjectMapper mapper;
 
