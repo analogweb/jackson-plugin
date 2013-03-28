@@ -35,12 +35,7 @@ public class JacksonJsonTypeMapper extends AbstractAttributesHandler implements
     }
 
     @Override
-    public String getScopeName() {
-        return "json";
-    }
-
-    @Override
-    public Object resolveAttributeValue(RequestContext context, InvocationMetadata metadata,
+    public Object resolveValue(RequestContext context, InvocationMetadata metadata,
             String key, Class<?> requiredType) {
         try {
             return jsonToObject(context.getRequestBody(), requiredType);

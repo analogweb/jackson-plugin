@@ -47,7 +47,7 @@ public class JacksonJsonTypeMapperTest {
                 "{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime() + "}")
                 .getBytes());
         when(requestContext.getRequestBody()).thenReturn(from);
-        Bean actual = (Bean) mapper.resolveAttributeValue(requestContext, null, null, Bean.class);
+        Bean actual = (Bean) mapper.resolveValue(requestContext, null, null, Bean.class);
         assertThat(actual.getName(), is("snowgoose"));
         assertThat(actual.isAlive(), is(true));
         assertThat(actual.getDate(), is(expectedDate));
@@ -62,7 +62,7 @@ public class JacksonJsonTypeMapperTest {
                 "{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime() + "}")
                 .getBytes());
         when(requestContext.getRequestBody()).thenReturn(from);
-        Bean actual = (Bean) mapper.resolveAttributeValue(requestContext, null, null, Bean.class);
+        Bean actual = (Bean) mapper.resolveValue(requestContext, null, null, Bean.class);
         assertThat(actual.getName(), is("snowgoose"));
         assertThat(actual.isAlive(), is(true));
         assertThat(actual.getDate(), is(expectedDate));
@@ -72,7 +72,7 @@ public class JacksonJsonTypeMapperTest {
     public void testMapToTypeWithNullSource() throws Exception {
         when(headers.getValues("Content-Type")).thenReturn(Arrays.asList("application/json"));
         when(requestContext.getRequestBody()).thenThrow(new IOException());
-        Bean actual = (Bean) mapper.resolveAttributeValue(requestContext, null, null, Bean.class);
+        Bean actual = (Bean) mapper.resolveValue(requestContext, null, null, Bean.class);
         assertThat(actual, is(nullValue()));
     }
 
