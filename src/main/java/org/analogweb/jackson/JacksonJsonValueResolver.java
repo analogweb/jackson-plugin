@@ -10,9 +10,8 @@ import org.analogweb.InvocationMetadata;
 import org.analogweb.MediaType;
 import org.analogweb.RequestContext;
 import org.analogweb.TypeMapper;
-import org.analogweb.core.AbstractAttributesHandler;
 import org.analogweb.core.MediaTypes;
-import org.analogweb.core.SpecificMediaTypeAttirbutesHandler;
+import org.analogweb.core.SpecificMediaTypeRequestValueResolver;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
@@ -23,8 +22,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  * 必要があります。
  * @author snowgoose
  */
-public class JacksonJsonTypeMapper extends AbstractAttributesHandler implements
-        SpecificMediaTypeAttirbutesHandler {
+public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueResolver {
 
     private ObjectMapper mapper;
 
@@ -35,8 +33,8 @@ public class JacksonJsonTypeMapper extends AbstractAttributesHandler implements
     }
 
     @Override
-    public Object resolveValue(RequestContext context, InvocationMetadata metadata,
-            String key, Class<?> requiredType) {
+    public Object resolveValue(RequestContext context, InvocationMetadata metadata, String key,
+            Class<?> requiredType) {
         try {
             return jsonToObject(context.getRequestBody(), requiredType);
         } catch (IOException e) {

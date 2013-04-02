@@ -24,14 +24,11 @@ public class JacksonPluginModulesConfigTest {
 
     @Test
     public void test() {
-        when(builder.addResponseFormatterClass(Json.class, JacksonJsonFormatter.class))
-                .thenReturn(builder);
-
+        when(builder.addResponseFormatterClass(Json.class, JacksonJsonFormatter.class)).thenReturn(
+                builder);
         ModulesBuilder actual = config.prepare(builder);
-
         assertThat(actual, is(builder));
         verify(builder).addResponseFormatterClass(Json.class, JacksonJsonFormatter.class);
-        verify(builder).addAttributesHandlerClass(JacksonJsonTypeMapper.class);
+        verify(builder).addRequestValueResolverClass(JacksonJsonValueResolver.class);
     }
-
 }

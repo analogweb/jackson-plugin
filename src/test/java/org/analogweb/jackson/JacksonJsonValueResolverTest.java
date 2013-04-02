@@ -22,9 +22,9 @@ import org.junit.Test;
 /**
  * @author snowgoose
  */
-public class JacksonJsonTypeMapperTest {
+public class JacksonJsonValueResolverTest {
 
-    private JacksonJsonTypeMapper mapper;
+    private JacksonJsonValueResolver mapper;
     private RequestContext requestContext;
     private Headers headers;
 
@@ -33,7 +33,7 @@ public class JacksonJsonTypeMapperTest {
      */
     @Before
     public void setUp() throws Exception {
-        mapper = new JacksonJsonTypeMapper();
+        mapper = new JacksonJsonValueResolver();
         requestContext = mock(RequestContext.class);
         headers = mock(Headers.class);
         when(requestContext.getRequestHeaders()).thenReturn(headers);
@@ -79,10 +79,8 @@ public class JacksonJsonTypeMapperTest {
     @Test
     public void testSupports() throws Exception {
         assertThat(mapper.supports(MediaTypes.APPLICATION_JSON_TYPE), is(true));
-
         assertThat(mapper.supports(MediaTypes.TEXT_PLAIN_TYPE), is(false));
         assertThat(mapper.supports(MediaTypes.valueOf("text/javascript")), is(false));
         assertThat(mapper.supports(MediaTypes.valueOf("aplication/javascript")), is(false));
     }
-
 }
