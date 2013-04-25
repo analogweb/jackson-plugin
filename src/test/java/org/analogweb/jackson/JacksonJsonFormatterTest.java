@@ -47,9 +47,8 @@ public class JacksonJsonFormatterTest {
         when(response.getResponseWriter()).thenReturn(writer);
         Date expectedDate = new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20");
         Bean source = new Bean("snowgoose", true, expectedDate);
-        formatter.formatAndWriteInto(context, response, "UTF-8", source);
+        formatter.formatAndWriteInto(context, response, "UTF-8", source).writeInto(out);
 
-        writer.getEntity().writeInto(out);
         String actual = new String(out.toByteArray(), "UTF-8");
         assertThat(actual,
                 is("{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime()
@@ -72,8 +71,7 @@ public class JacksonJsonFormatterTest {
         Bean source = new Bean("snowgoose", true,
                 new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20"));
         formatter.setObjectMapper(alwaysIOError);
-        formatter.formatAndWriteInto(context, response, "UTF-8", source);
-        writer.getEntity().writeInto(out);
+        formatter.formatAndWriteInto(context, response, "UTF-8", source).writeInto(out);
     }
 
 }

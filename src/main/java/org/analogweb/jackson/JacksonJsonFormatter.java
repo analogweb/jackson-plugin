@@ -28,10 +28,10 @@ public class JacksonJsonFormatter implements ResponseFormatter {
     }
 
     @Override
-    public void formatAndWriteInto(RequestContext context, ResponseContext writeTo, String charset,
+    public ResponseEntity formatAndWriteInto(RequestContext context, ResponseContext writeTo, String charset,
             final Object source) {
         final ObjectMapper mapper = getObjectMapper();
-        writeTo.getResponseWriter().writeEntity(new ResponseEntity() {
+        return new ResponseEntity() {
             @Override
             public void writeInto(OutputStream responseBody) throws IOException {
                 try {
@@ -40,7 +40,11 @@ public class JacksonJsonFormatter implements ResponseFormatter {
                     throw new FormatFailureException(e, source, getClass().getName());
                 }
             }
-        });
+			@Override
+			public long getContentLength() {
+				return -1;
+			}
+        };
     }
 
     protected ObjectMapper getObjectMapper() {
