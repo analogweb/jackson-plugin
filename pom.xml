@@ -35,7 +35,7 @@
 	</properties>
 	<issueManagement />
 	<ciManagement />
-	<inceptionYear>2012</inceptionYear>
+	<inceptionYear>2013</inceptionYear>
 	<contributors />
 	<scm>
 		<connection>scm:git:git@github.com:analogweb/jackson-plugin.git</connection>
@@ -59,19 +59,19 @@
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
-			<version>1.9.6</version>
+			<version>1.9.13</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.6</version>
+			<version>1.9.13</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.analogweb</groupId>
 			<artifactId>analogweb-core</artifactId>
-			<version>0.8.0</version>
+			<version>0.8.1-SNAPSHOT</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
