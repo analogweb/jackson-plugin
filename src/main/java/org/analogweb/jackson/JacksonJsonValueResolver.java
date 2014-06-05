@@ -5,6 +5,7 @@ import static org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNK
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.lang.annotation.Annotation;
 
 import org.analogweb.InvocationMetadata;
 import org.analogweb.MediaType;
@@ -34,7 +35,7 @@ public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueRe
 
     @Override
     public Object resolveValue(RequestContext context, InvocationMetadata metadata, String key,
-            Class<?> requiredType) {
+            Class<?> requiredType, Annotation[] annotations) {
         try {
             return jsonToObject(context.getRequestBody(), requiredType);
         } catch (IOException e) {
