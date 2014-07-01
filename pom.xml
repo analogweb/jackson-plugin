@@ -20,7 +20,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.analogweb</groupId>
 	<artifactId>analogweb-jackson</artifactId>
-	<version>0.8.2-SNAPSHOT</version>
+	<version>0.8.2</version>
 	<packaging>jar</packaging>
 	<name>analogweb-jackson</name>
 	<url>https://github.com/analogweb</url>
@@ -38,7 +38,8 @@
 	<scm>
 		<connection>scm:git:git@github.com:analogweb/jackson-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:analogweb/jackson-plugin.git</developerConnection>
-	</scm>
+	  <tag>analogweb-jackson-0.8.2</tag>
+  </scm>
 	<licenses>
 		<license>
 			<name>MIT license</name>
@@ -69,7 +70,7 @@
 		<dependency>
 			<groupId>org.analogweb</groupId>
 			<artifactId>analogweb-core</artifactId>
-			<version>0.8.2-SNAPSHOT</version>
+			<version>0.8.2</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
