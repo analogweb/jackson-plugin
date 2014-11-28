@@ -9,17 +9,14 @@ import org.analogweb.util.logging.Log;
 import org.analogweb.util.logging.Logs;
 
 /**
- * <a href="http://jackson.codehaus.org/">Jackson</a>フレームワークを
- * <a href="https://github.com/analogweb">Analog Web Framework</a>
- * に統合する{@link PluginModulesConfig}です。<br/>
- * このプラグインを使用することで、{@link Json}使用時に、
- * Jacksonを利用したJsonの生成とレスポンスを行う事が可能になります。
+ * This {@link PluginModulesConfig} integrates <a href=""https://github.com/FasterXML/jackson"">Jackson</a> into
+ * <a href="http://analogweb.org">Analog Web Framework</a>
  * @author snowgoose
  */
 public class JacksonPluginModulesConfig implements PluginModulesConfig {
 
     /**
-     * Jacksonプラグインで使用する{@link MessageResource}です。
+     * {@link MessageResource} for this plugin.
      */
     public static final MessageResource PLUGIN_MESSAGE_RESOURCE = new PropertyResourceBundleMessageResource(
             "org.analogweb.jackson.analog-messages");

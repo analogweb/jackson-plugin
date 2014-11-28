@@ -1,7 +1,5 @@
 package org.analogweb.jackson;
 
-import static org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -10,17 +8,14 @@ import java.lang.annotation.Annotation;
 import org.analogweb.InvocationMetadata;
 import org.analogweb.MediaType;
 import org.analogweb.RequestContext;
-import org.analogweb.TypeMapper;
 import org.analogweb.core.MediaTypes;
 import org.analogweb.core.SpecificMediaTypeRequestValueResolver;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Jacksonによる変換により、リクエストされたJSONを任意のオブジェクト
- * のインスタンスに変換する{@link TypeMapper}の実装です。<br/>
- * 変換元の値として、リクエストされたJSONを保持する{@link InputStream}
- * または{@link Reader}(読み込み可能なリクエストボディ)が指定されている
- * 必要があります。
+ * {@link SpecificMediaTypeRequestValueResolver} implementation for Jackson.
  * @author snowgoose
  */
 public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueResolver {
@@ -29,7 +24,7 @@ public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueRe
 
     protected ObjectMapper initObjectMapper() {
         ObjectMapper newMapper = new ObjectMapper();
-        newMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
+        newMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return newMapper;
     }
 

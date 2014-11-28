@@ -8,14 +8,14 @@ import org.analogweb.RequestContext;
 import org.analogweb.ResponseContext;
 import org.analogweb.ResponseContext.ResponseEntity;
 import org.analogweb.core.FormatFailureException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
- * <a href="http://jackson.codehaus.org/">Jackson</a>を使用して
- * レスポンスする対象のオブジェクトをJSONにフォーマットする
- * {@link DirectionFormatter}の実装です。<br/>
- * @author snowgoose
+ * {@link ResponseFormatter} implementation for deserialise or serialise JSON with 
+ * <a href="https://github.com/FasterXML/jackson">Jackson</a><br/>
+ * @author snowgooseyk
  */
 public class JacksonJsonFormatter implements ResponseFormatter {
 
@@ -23,7 +23,7 @@ public class JacksonJsonFormatter implements ResponseFormatter {
 
     protected ObjectMapper initObjectMapper() {
         ObjectMapper newMapper = new ObjectMapper();
-        newMapper.configure(Feature.FAIL_ON_EMPTY_BEANS, false);
+        newMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         return newMapper;
     }
 

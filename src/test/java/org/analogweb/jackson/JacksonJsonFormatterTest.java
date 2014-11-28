@@ -16,13 +16,14 @@ import org.analogweb.ResponseContext;
 import org.analogweb.ResponseContext.ResponseWriter;
 import org.analogweb.core.DefaultResponseWriter;
 import org.analogweb.core.FormatFailureException;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JacksonJsonFormatterTest {
 
@@ -62,7 +63,9 @@ public class JacksonJsonFormatterTest {
         ResponseWriter writer = new DefaultResponseWriter();
         when(response.getResponseWriter()).thenReturn(writer);
         ObjectMapper alwaysIOError = new ObjectMapper() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void writeValue(OutputStream out, Object value) throws IOException,
                     JsonGenerationException, JsonMappingException {
                 throw new IOException();
