@@ -10,6 +10,10 @@ public class Bean {
     public Bean() {
         super();
     }
+    public Bean(String name) {
+        this(name,true,new Date());
+    }
+
     public Bean(String name, boolean alive, Date date) {
         super();
         this.name = name;
@@ -25,5 +29,5 @@ public class Bean {
     public Date getDate() {
         return date;
     }
-
+    
 }

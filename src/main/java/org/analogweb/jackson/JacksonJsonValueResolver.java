@@ -8,14 +8,19 @@ import java.lang.annotation.Annotation;
 import org.analogweb.InvocationMetadata;
 import org.analogweb.MediaType;
 import org.analogweb.RequestContext;
+import org.analogweb.core.ApplicationRuntimeException;
+import org.analogweb.core.InvalidRequestFormatException;
 import org.analogweb.core.MediaTypes;
 import org.analogweb.core.SpecificMediaTypeRequestValueResolver;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * {@link SpecificMediaTypeRequestValueResolver} implementation for Jackson.
+ * Parse JSON formatted request body using Jackson's {@link ObjectMapper}.
  * @author snowgoose
  */
 public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueResolver {
@@ -34,23 +39,41 @@ public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueRe
         try {
             return jsonToObject(context.getRequestBody(), requiredType);
         } catch (IOException e) {
-            return null;
+            throw new ApplicationRuntimeException(e) {
+                private static final long serialVersionUID = 1L;
+            };
         }
     }
 
     protected Object jsonToObject(InputStream in, Class<?> requiredType) {
         try {
             return getObjectMapper().readValue(in, requiredType);
-        } catch (IOException e) {
-            return null;
+        } catch (JsonMappingException e) {
+            throw new ApplicationRuntimeException(e) {
+                private static final long serialVersionUID = 1L;
+            };
+        } catch (JsonParseException e) {
+            throw new InvalidRequestFormatException(e, JacksonJsonValueResolver.class);
+        } catch (IOException e){
+            throw new ApplicationRuntimeException(e) {
+                private static final long serialVersionUID = 1L;
+            };
         }
     }
 
     protected Object jsonToObject(Reader reader, Class<?> requiredType) {
         try {
             return getObjectMapper().readValue(reader, requiredType);
-        } catch (IOException e) {
-            return null;
+        } catch (JsonMappingException e) {
+            throw new ApplicationRuntimeException(e) {
+                private static final long serialVersionUID = 1L;
+            };
+        } catch (JsonParseException e) {
+            throw new InvalidRequestFormatException(e, JacksonJsonValueResolver.class);
+        } catch (IOException e){
+            throw new ApplicationRuntimeException(e) {
+                private static final long serialVersionUID = 1L;
+            };
         }
     }
 
