@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
 import org.analogweb.annotation.As;
 import org.analogweb.annotation.Resolver;
 
-
 /**
  * Parsing request body with {@link JacksonJsonValueResolver}.
  * @author snowgooseyk
