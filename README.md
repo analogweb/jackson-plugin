@@ -1,7 +1,7 @@
 Analog Web Framework Jackson Plugin
 ===============================================
 
-[![Build Status](https://travis-ci.org/analogweb/jackson-plugin.svg?branch=master)](https://travis-ci.org/analogweb/jackson-plugin)
+[![Build Status](https://travis-ci.org/analogweb/jackson-plugin.svg)](https://travis-ci.org/analogweb/jackson-plugin)
 
 This plugin enables parse JSON format request.(application/json)
 
@@ -39,7 +39,7 @@ public class Hello {
     ...
     Bean bean
     ...
-    // Response JSON.
+    // Response JSON using Jackson's ObjectMapper.
     return json(bean)
   }
 
