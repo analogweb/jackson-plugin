@@ -31,7 +31,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<jackson-version>2.4.3</jackson-version>
-		<analogweb-version>0.9.2</analogweb-version>
+		<analogweb-version>0.9.3-SNAPSHOT</analogweb-version>
 	</properties>
 	<issueManagement />
 	<ciManagement />
