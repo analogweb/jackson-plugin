@@ -39,9 +39,7 @@ public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueRe
         try {
             return jsonToObject(context.getRequestBody(), requiredType);
         } catch (IOException e) {
-            throw new ApplicationRuntimeException(e) {
-                private static final long serialVersionUID = 1L;
-            };
+            throw new InvalidRequestFormatException(e, getClass());
         }
     }
 
@@ -55,9 +53,7 @@ public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueRe
         } catch (JsonParseException e) {
             throw new InvalidRequestFormatException(e, JacksonJsonValueResolver.class);
         } catch (IOException e){
-            throw new ApplicationRuntimeException(e) {
-                private static final long serialVersionUID = 1L;
-            };
+            throw new InvalidRequestFormatException(e, getClass());
         }
     }
 
@@ -65,15 +61,11 @@ public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueRe
         try {
             return getObjectMapper().readValue(reader, requiredType);
         } catch (JsonMappingException e) {
-            throw new ApplicationRuntimeException(e) {
-                private static final long serialVersionUID = 1L;
-            };
+            throw new InvalidRequestFormatException(e, getClass());
         } catch (JsonParseException e) {
-            throw new InvalidRequestFormatException(e, JacksonJsonValueResolver.class);
+            throw new InvalidRequestFormatException(e, getClass());
         } catch (IOException e){
-            throw new ApplicationRuntimeException(e) {
-                private static final long serialVersionUID = 1L;
-            };
+            throw new InvalidRequestFormatException(e, getClass());
         }
     }
 
