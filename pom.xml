@@ -17,7 +17,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.analogweb</groupId>
   <artifactId>analogweb-jackson</artifactId>
-  <version>0.9.4</version>
+  <version>0.9.5-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>analogweb-jackson</name>
   <url>https://github.com/analogweb</url>
@@ -28,7 +28,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <jackson-version>2.5.1</jackson-version>
-    <analogweb-version>0.9.3-SNAPSHOT</analogweb-version>
   </properties>
   <issueManagement />
   <ciManagement />
@@ -38,7 +37,6 @@
     <url>scm:git:git@github.com:analogweb/jackson-plugin.git</url>
     <connection>scm:git:git@github.com:analogweb/jackson-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:analogweb/jackson-plugin.git</developerConnection>
-    <tag>v0.9.4</tag>
   </scm>
   <licenses>
     <license>
