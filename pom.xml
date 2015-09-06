@@ -70,7 +70,7 @@
     <dependency>
       <groupId>org.analogweb</groupId>
       <artifactId>analogweb-core</artifactId>
-      <version>0.9.8</version>
+      <version>0.9.9-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -87,7 +87,7 @@
     <dependency>
       <groupId>org.analogweb</groupId>
       <artifactId>analogweb-core</artifactId>
-      <version>0.9.8</version>
+      <version>0.9.9-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

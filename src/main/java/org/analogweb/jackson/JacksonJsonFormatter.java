@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import org.analogweb.ResponseFormatter;
 import org.analogweb.RequestContext;
 import org.analogweb.ResponseContext;
-import org.analogweb.ResponseContext.ResponseEntity;
+import org.analogweb.ResponseEntity;
 import org.analogweb.core.FormatFailureException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
