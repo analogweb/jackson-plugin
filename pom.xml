@@ -20,7 +20,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.analogweb</groupId>
   <artifactId>analogweb-jackson</artifactId>
-  <version>0.9.9-SNAPSHOT</version>
+  <version>0.9.10</version>
   <packaging>jar</packaging>
   <name>analogweb-jackson</name>
   <url>https://github.com/analogweb</url>
@@ -40,7 +40,7 @@
     <url>scm:git:git@github.com:analogweb/jackson-plugin.git</url>
     <connection>scm:git:git@github.com:analogweb/jackson-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:analogweb/jackson-plugin.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v0.9.10</tag>
   </scm>
   <licenses>
     <license>
@@ -70,7 +70,7 @@
     <dependency>
       <groupId>org.analogweb</groupId>
       <artifactId>analogweb-core</artifactId>
-      <version>0.9.9-SNAPSHOT</version>
+      <version>0.9.10</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -87,7 +87,7 @@
     <dependency>
       <groupId>org.analogweb</groupId>
       <artifactId>analogweb-core</artifactId>
-      <version>0.9.9-SNAPSHOT</version>
+      <version>0.9.10</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
