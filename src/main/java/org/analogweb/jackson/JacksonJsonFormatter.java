@@ -32,11 +32,13 @@ public class JacksonJsonFormatter implements ResponseFormatter {
             String charset, final Object source) {
         final ObjectMapper mapper = getObjectMapper();
         return new ResponseEntity() {
+        	
+        	private byte[] bytes;
 
             @Override
             public void writeInto(OutputStream responseBody) throws IOException {
                 try {
-                    mapper.writeValue(responseBody, source);
+                    responseBody.write(getByteContents());
                 } catch (IOException e) {
                     throw new FormatFailureException(e, source, getClass().getName());
                 }
@@ -44,7 +46,18 @@ public class JacksonJsonFormatter implements ResponseFormatter {
 
             @Override
             public long getContentLength() {
-                return -1;
+                return getByteContents().length;
+            }
+            
+            private byte[] getByteContents(){
+                try {
+                	if(this.bytes == null){
+                        this.bytes = mapper.writeValueAsBytes(source);
+                	}
+                	return this.bytes;
+                } catch (IOException e) {
+                    throw new FormatFailureException(e, source, getClass().getName());
+                }
             }
         };
     }

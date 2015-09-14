@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,7 +17,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -59,9 +58,8 @@ public class JacksonJsonFormatterTest {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-            public void writeValue(OutputStream out, Object value) throws IOException,
-                    JsonGenerationException, JsonMappingException {
-                throw new IOException();
+            public byte[] writeValueAsBytes(Object value) throws JsonProcessingException {
+                throw JsonMappingException.fromUnexpectedIOE(new IOException());
             }
         };
         Bean source = new Bean("snowgoose", true,
