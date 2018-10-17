@@ -16,6 +16,7 @@ import org.analogweb.Headers;
 import org.analogweb.RequestContext;
 import org.analogweb.core.ApplicationRuntimeException;
 import org.analogweb.core.MediaTypes;
+import org.analogweb.core.DefaultReadableBuffer;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,7 +51,7 @@ public class JacksonJsonValueResolverTest {
         InputStream from = new ByteArrayInputStream(String.valueOf(
                 "{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime() + "}")
                 .getBytes());
-        when(requestContext.getRequestBody()).thenReturn(from);
+        when(requestContext.getRequestBody()).thenReturn(DefaultReadableBuffer.readBuffer(from));
         Bean actual = (Bean) mapper.resolveValue(requestContext, null, null, Bean.class, null);
         assertThat(actual.getName(), is("snowgoose"));
         assertThat(actual.isAlive(), is(true));
@@ -65,7 +66,7 @@ public class JacksonJsonValueResolverTest {
         InputStream from = new ByteArrayInputStream(String.valueOf(
                 "{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime() + "}")
                 .getBytes());
-        when(requestContext.getRequestBody()).thenReturn(from);
+        when(requestContext.getRequestBody()).thenReturn(DefaultReadableBuffer.readBuffer(from));
         Bean actual = (Bean) mapper.resolveValue(requestContext, null, null, Bean.class, null);
         assertThat(actual.getName(), is("snowgoose"));
         assertThat(actual.isAlive(), is(true));

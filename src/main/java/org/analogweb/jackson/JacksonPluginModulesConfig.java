@@ -11,7 +11,7 @@ import org.analogweb.util.logging.Logs;
 /**
  * This {@link PluginModulesConfig} integrates <a href=""https://github.com/FasterXML/jackson"">Jackson</a> into
  * <a href="http://analogweb.org">Analog Web Framework</a>
- * @author snowgoose
+ * @author y2k2mt
  */
 public class JacksonPluginModulesConfig implements PluginModulesConfig {
 

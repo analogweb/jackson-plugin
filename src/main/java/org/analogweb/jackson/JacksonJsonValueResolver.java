@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * {@link SpecificMediaTypeRequestValueResolver} implementation for Jackson.
  * Parse JSON formatted request body using Jackson's {@link ObjectMapper}.
- * @author snowgoose
+ * @author y2k2mt
  */
 public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueResolver {
 
@@ -37,7 +37,7 @@ public class JacksonJsonValueResolver implements SpecificMediaTypeRequestValueRe
     public Object resolveValue(RequestContext context, InvocationMetadata metadata, String key,
             Class<?> requiredType, Annotation[] annotations) {
         try {
-            return jsonToObject(context.getRequestBody(), requiredType);
+            return jsonToObject(context.getRequestBody().asInputStream(), requiredType);
         } catch (IOException e) {
             throw new InvalidRequestFormatException(e, getClass());
         }
