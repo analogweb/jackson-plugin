@@ -13,6 +13,7 @@ import org.analogweb.annotation.Post;
 import org.analogweb.annotation.RequestFormats;
 import org.analogweb.annotation.Route;
 import org.analogweb.core.MediaTypes;
+import org.analogweb.core.DefaultReadableBuffer;
 import org.analogweb.core.fake.FakeApplication;
 import org.analogweb.core.fake.ResponseResult;
 import org.analogweb.util.Maps;
@@ -50,7 +51,7 @@ public class JsonTypeTest {
         Map<String, List<String>> header = Maps.newHashMap("Content-Type",
                 Arrays.asList("application/json"));
         ResponseResult result = app.request("jsontypetest/test", "POST", header,
-                new ByteArrayInputStream("{\"name\":\"snowgooseyk\"}".getBytes()));
+                DefaultReadableBuffer.readBuffer(new ByteArrayInputStream("{\"name\":\"snowgooseyk\"}".getBytes())));
         assertThat(result.getStatus(), is(200));
         assertThat(result.getResponseBody().toString(), is("snowgooseyk"));
     }
@@ -60,7 +61,7 @@ public class JsonTypeTest {
         Map<String, List<String>> header = Maps.newHashMap("Content-Type",
                 Arrays.asList("plain/text"));
         ResponseResult result = app.request("jsontypetest/test", "POST", header,
-                new ByteArrayInputStream("{\"name\":\"snowgooseyk\"}".getBytes()));
+                DefaultReadableBuffer.readBuffer(new ByteArrayInputStream("{\"name\":\"snowgooseyk\"}".getBytes())));
         assertThat(result.getStatus(), is(415));
     }
 }

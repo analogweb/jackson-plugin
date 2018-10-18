@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 /**
  * {@link ResponseFormatter} implementation for deserialise or serialise JSON with 
  * <a href="https://github.com/FasterXML/jackson">Jackson</a><br/>
- * @author snowgooseyk
+ * @author y2k2mt
  */
 public class JacksonJsonFormatter implements ResponseFormatter {
 
@@ -31,17 +31,13 @@ public class JacksonJsonFormatter implements ResponseFormatter {
     public ResponseEntity formatAndWriteInto(RequestContext context, ResponseContext writeTo,
             String charset, final Object source) {
         final ObjectMapper mapper = getObjectMapper();
-        return new ResponseEntity() {
+        return new ResponseEntity<byte[]>() {
         	
         	private byte[] bytes;
 
             @Override
-            public void writeInto(OutputStream responseBody) throws IOException {
-                try {
-                    responseBody.write(getByteContents());
-                } catch (IOException e) {
-                    throw new FormatFailureException(e, source, getClass().getName());
-                }
+            public byte[] entity() {
+                return getByteContents();
             }
 
             @Override

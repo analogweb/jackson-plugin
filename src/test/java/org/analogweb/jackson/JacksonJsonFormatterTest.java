@@ -11,6 +11,7 @@ import java.util.Date;
 
 import org.analogweb.RequestContext;
 import org.analogweb.ResponseContext;
+import org.analogweb.ResponseEntity;
 import org.analogweb.core.FormatFailureException;
 import org.junit.Before;
 import org.junit.Rule;
@@ -42,9 +43,9 @@ public class JacksonJsonFormatterTest {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         Date expectedDate = new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20");
         Bean source = new Bean("snowgoose", true, expectedDate);
-        formatter.formatAndWriteInto(context, response, "UTF-8", source).writeInto(out);
+        ResponseEntity entity = formatter.formatAndWriteInto(context, response, "UTF-8", source);
 
-        String actual = new String(out.toByteArray(), "UTF-8");
+        String actual = new String((byte[])entity.entity(), "UTF-8");
         assertThat(actual,
                 is("{\"name\":\"snowgoose\",\"alive\":true,\"date\":" + expectedDate.getTime()
                         + "}"));
@@ -65,7 +66,7 @@ public class JacksonJsonFormatterTest {
         Bean source = new Bean("snowgoose", true,
                 new SimpleDateFormat("yyyy/MM/dd").parse("1978/4/20"));
         formatter.setObjectMapper(alwaysIOError);
-        formatter.formatAndWriteInto(context, response, "UTF-8", source).writeInto(out);
+        formatter.formatAndWriteInto(context, response, "UTF-8", source).entity();
     }
 
 }
